@@ -1,16 +1,25 @@
+import { Routes, Route, Link } from 'react-router-dom';
+import { Homepage } from './pages/Homepage';
+import { NotfoundPage } from './pages/NotfoundPage';
+import { Userspage } from './pages/Userspage';
 import './App.css';
 import React from 'react';
-import Users from './Components/Users/Users';
+
 
 const App = () => {
-
   return (
-    <div className='App'>
-      <h1 className='text-center cantarell my-4'>MatchYou</h1>
-      <Users />
-    </div>
+    <>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/users" element={<Userspage />} />
+        <Route path="*" element={<NotfoundPage />} />
+      </Routes>
+    </>
 
   )
 }
 
 export default App;
+
+
+
