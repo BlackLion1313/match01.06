@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import User from '../User/User';
-import bootstrap from 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap';
 import { Link } from 'react-router-dom';
-
+import User from '../User/User';
+import InputsFilters from '../InputsFilters/InputsFilters';
+import CountryFilter from '../CountryFilter/CountryFilter';
+import AgeFilter from '../AgeFilter/AgeFilter';
 
 const Users = () => {
   const [originalUsers, setOriginalUsers] = useState([]);
@@ -14,9 +13,11 @@ const Users = () => {
   const [genderFilterInput, setGenderFilterInput] = useState('all');
   const [countryFilterInput, setCountryFilterInput] = useState('all');
   const [searchInput, setSearchInput] = useState('');
+  const [ageFilterFrom, setAgeFilterFrom] = useState('');
+  const [ageFilterTo, setAgeFilterTo] = useState('');
 
   const getUsers = async () => {
-    let url = 'https://randomuser.me/api/?results=200';
+    let url = 'https://randomuser.me/api/?results=70';
 
     try {
       const response = await fetch(url);
@@ -47,9 +48,23 @@ const Users = () => {
     setSearchInput(event.target.value);
   };
 
+  const trackInputAgeFilterFrom = (event) => {
+    setAgeFilterFrom(event.target.value);
+  };
+
+  const trackInputAgeFilterTo = (event) => {
+    setAgeFilterTo(event.target.value);
+  };
+
   useEffect(() => {
     const filteredUsers = originalUsers.filter((user) => {
-      if (genderFilterInput === 'all' && countryFilterInput === 'all' && searchInput === '') {
+      if (
+        genderFilterInput === 'all' &&
+        countryFilterInput === 'all' &&
+        searchInput === '' &&
+        ageFilterFrom === '' &&
+        ageFilterTo === ''
+      ) {
         return true; // return all users when no filters applied
       } else {
         let matchesFilters = true;
@@ -70,109 +85,65 @@ const Users = () => {
               user.name.last.toLowerCase().includes(searchTerm));
         }
 
+        if (ageFilterFrom !== '') {
+          matchesFilters = matchesFilters && user.dob.age >= parseInt(ageFilterFrom);
+        }
+
+        if (ageFilterTo !== '') {
+          matchesFilters = matchesFilters && user.dob.age <= parseInt(ageFilterTo);
+        }
+
         return matchesFilters;
       }
     });
 
     setUsers(filteredUsers);
-  }, [originalUsers, genderFilterInput, countryFilterInput, searchInput]);
+  }, [originalUsers, genderFilterInput, countryFilterInput, searchInput, ageFilterFrom, ageFilterTo]);
 
   return (
     <>
       <Link to="/">Go to HomePage</Link>
       <div className="container">
-        <div className="row mb-3">
-          <div className="col-md-4">
-            <input
-              type="text"
-              id="searchInput"
-              className="form-control-sm"
-              placeholder="Search users..."
-              value={searchInput}
-              onChange={trackInputSearchValue}
-            />
-          </div>
-          <div className="container">
-            <div className="col-md-6">
-              <div className="form-group">
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="all"
-                      checked={genderFilterInput === 'all'}
-                      onChange={trackInputGenderFilterValue}
-                    />
-                    All
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="female"
-                      checked={genderFilterInput === 'female'}
-                      onChange={trackInputGenderFilterValue}
-                    />
-                    Female
-                  </label>
-                </div>
-                <div className="form-check form-check-inline">
-                  <label className="form-check-label">
-                    <input
-                      className="form-check-input"
-                      type="radio"
-                      value="male"
-                      checked={genderFilterInput === 'male'}
-                      onChange={trackInputGenderFilterValue}
-                    />
-                    Male
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div className="form-group">
-              <label htmlFor="countryFilter">Filter by Country:  </label>
-              <select
-                className="form-control-sm mx-3"
-                id="countryFilter"
-
-                value={countryFilterInput}
-                onChange={trackInputCountryFilterValue}
-              >
-                <option value="all">All</option>
-                {originalUsers.map((user) => (
-                  <option key={user.phone} value={user.location.country}>
-                    {user.location.country}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
+        <InputsFilters
+          searchInput={searchInput}
+          trackInputSearchValue={trackInputSearchValue}
+          genderFilterInput={genderFilterInput}
+          trackInputGenderFilterValue={trackInputGenderFilterValue}
+        />
+        <CountryFilter
+          countryFilterInput={countryFilterInput}
+          trackInputCountryFilterValue={trackInputCountryFilterValue}
+          originalUsers={originalUsers}
+        />
+        <AgeFilter
+          ageFilterFrom={ageFilterFrom}
+          ageFilterTo={ageFilterTo}
+          trackInputAgeFilterFrom={trackInputAgeFilterFrom}
+          trackInputAgeFilterTo={trackInputAgeFilterTo}
+        />
         <div className="row">
           <div className="col-12">
             <div className="row">
-              {/*conditional rendering-do always-good practice*/}
-              {users !== [] &&
-                users.map((user) => {
-                  return (
-                    <User
-                      key={user.phone}
-                      nameF={user.name.first}
-                      nameL={user.name.last}
-                      img={user.picture.large}
-                      city={user.location.city}
-                      country={user.location.country}
-                      age={user.dob.age}
-                      email={user.email}
-                    />
-                  );
-                })}
-              {loading && <h1>...Loading...</h1>}
-              {error && <h1>{error}</h1>}
+              {/* Conditional rendering - only render users if users array is not empty */}
+              {users.length > 0 ? (
+                users.map((user) => (
+                  <User
+                    key={user.phone}
+                    uKey={user.phone}
+                    nameF={user.name.first}
+                    nameL={user.name.last}
+                    img={user.picture.large}
+                    city={user.location.city}
+                    country={user.location.country}
+                    age={user.dob.age}
+                    email={user.email}
+                  />
+                ))
+              ) : loading ? (
+                <h1>...Loading...</h1>
+              ) : (
+                <h1>{error}</h1>
+              )}
             </div>
           </div>
         </div>

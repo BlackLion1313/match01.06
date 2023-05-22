@@ -4,6 +4,7 @@ import { NotfoundPage } from './pages/NotfoundPage';
 import { Userspage } from './pages/Userspage';
 import './App.css';
 import React from 'react';
+import UserDetails from './pages/UserDetails';
 
 
 
@@ -15,6 +16,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/users" element={<Userspage />} />
+        <Route path="/user/:userId" element={<UserDetails />} />
         <Route path="*" element={<NotfoundPage />} />
       </Routes>
 
