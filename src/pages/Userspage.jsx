@@ -13,4 +13,4 @@ const Userspage = () => {
   )
 }
 
-export {Userspage};
+export { Userspage };

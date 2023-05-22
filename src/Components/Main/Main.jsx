@@ -19,6 +19,7 @@ const Main = () => {
               <header className='my-4'>
                 <Link className='mx-4' to='/'>Home</Link>
                 <Link className='mx-4' to='/users'>Users</Link>
+                <Link to="/auth">AuthPage</Link>
                 <h1 className="mt-4 text-white">MatchYou</h1>
                 <h2 className='text-white mt-4'>BLA BLA BLA BLA BLA BLA</h2>
                 <div className='d-flex flex-column gap-3 mt-4'>
