@@ -1,29 +1,29 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import { Homepage } from './pages/Homepage';
+import Homepage from './pages/Homepage';
 import { NotfoundPage } from './pages/NotfoundPage';
 import { Userspage } from './pages/Userspage';
 import './App.css';
 import React from 'react';
 import UserDetails from './pages/UserDetails';
-import { AuthPage } from './pages/AuthPage';
-
-
+import { AuthContextProvider } from './context/AuthContext';
+import { app } from './config/firebaseConfig';
+import Register from './pages/Register';
 
 
 const App = () => {
 
-
+console.log(app)
   return (
     <>
-      <Routes>
-
-        <Route path="/" element={<Homepage />} />
-        <Route path="/users" element={<Userspage />} />
-        <Route path="/auth" element={<AuthPage />} />
-        <Route path="/user/:userId" element={<UserDetails />} />
-        <Route path="*" element={<NotfoundPage />} />
-      </Routes>
-
+      <AuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Homepage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/users" element={<Userspage />} />
+          <Route path="/user/:userId" element={<UserDetails />} />
+          <Route path="*" element={<NotfoundPage />} />
+        </Routes>
+      </AuthContextProvider>
     </>
 
   )
