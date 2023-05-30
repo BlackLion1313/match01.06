@@ -1,13 +1,17 @@
 // import React, { useContext } from 'react';
-// import { Navigate } from 'react-router-dom';
+// import { Route, Navigate } from 'react-router-dom';
 // import { AuthContext } from '../context/AuthContext';
 
-// function ProtectedRoute(props) {
-//   const { user } = useContext(AuthContext);
-//   const isntAuth = user === null ? true : false
+// const ProtectedRoute = ({ component: Component, ...rest }) => {
+//   const { isLoggedIn } = useContext(AuthContext);
+
 //   return (
-//     <>{isntAuth ? props.children : <Navigate to="/users"/>}</>
-//   )
-// }
+//     <Route
+//       {...rest}
+//       element={isLoggedIn ? <Component /> : <Navigate to="/login" replace />}
+//     />
+//   );
+// };
 
 // export default ProtectedRoute;
+

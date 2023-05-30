@@ -1,42 +1,66 @@
 import { createContext, useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { auth } from "../config/firebaseConfig";
 
-//1.create context
-export const AuthContext  = createContext();
-
-//2 define our store(we we're gonna share)
+export const AuthContext = createContext();
 
 export const AuthContextProvider = (props) => {
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-//move here the state variables and funcs I wanna share
-// const [user, setUser] = useState({
-//   name: ""
-// });
-const [user, setUser] = useState({});
+  const register = async (email, password, name) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-const register = async (email, password) => {
-  try {
-  const userCredential = await createUserWithEmailAndPassword (
-    auth,
-    email,
-    password
-    );
+      // Update the user's display name
+      await updateProfile(user, { displayName: name });
 
-    const user = userCredential.user;
-    setUser(user)
-  } catch (error) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log('errorMessage', errorMessage )
-  }
+      setUser(user);
+      setIsLoggedIn(true);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode);
+      console.log(errorMessage);
+      setUser(null);
+      setIsLoggedIn(false);
+    }
+  };
 
+  const login = async (email, password) => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      setUser(user);
+      setIsLoggedIn(true);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode);
+      console.log(errorMessage);
+      setUser(null);
+      setIsLoggedIn(false);
+      throw error;
+    }
+  };
 
-};
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      setIsLoggedIn(false);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log("errorMessage", errorMessage);
+      throw error;
+    }
+  };
 
-  return(
-    <AuthContext.Provider value={{ user, setUser, register }}>
+  return (
+    <AuthContext.Provider value={{ user, isLoggedIn, register, login, logout }}>
       {props.children}
     </AuthContext.Provider>
-  )
-}
+  );
+};

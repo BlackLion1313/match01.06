@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import { NotfoundPage } from './pages/NotfoundPage';
 import { Userspage } from './pages/Userspage';
@@ -8,6 +8,8 @@ import UserDetails from './pages/UserDetails';
 import { AuthContextProvider } from './context/AuthContext';
 import { app } from './config/firebaseConfig';
 import Register from './pages/Register';
+import Login from './pages/Login';
+
 
 
 const App = () => {
@@ -19,6 +21,7 @@ console.log(app)
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/users" element={<Userspage />} />
           <Route path="/user/:userId" element={<UserDetails />} />
           <Route path="*" element={<NotfoundPage />} />

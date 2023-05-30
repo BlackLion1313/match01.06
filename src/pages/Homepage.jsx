@@ -1,16 +1,30 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Main from '../Components/Main/Main';
 import { AuthContext } from '../context/AuthContext';
 
 function Homepage() {
-  const { user } = useContext(AuthContext);
+  const { user, isLoggedIn } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check if authentication state has been loaded
+    if (user && Object.keys(user).length > 0) {
+      setIsLoading(false);
+    }
+  }, [user]);
+
   return (
     <>
-    {/* <h2>Welcome {user?.name}!!</h2> */}
-   {user.name ? <h2>Welcome {user.name}!!</h2> : <h1>hi to nobody</h1>} 
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : isLoggedIn ? (
+        <h2>Welcome, {user.name || user.email}!!</h2>
+      ) : (
+        <h1>Hi, nobody. Please log in.</h1>
+      )}
       <Main />
-  </>
-  )
+    </>
+  );
 }
 
-export default  Homepage ;
+export default Homepage;
