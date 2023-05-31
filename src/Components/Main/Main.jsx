@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Modal, Card } from 'react-bootstrap';
+import { PersonCircle } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
-import beach from '../../assets/beach.mp4';
+import dsa from '../../assets/dsa.mp4'
 import { AuthContext } from '../../context/AuthContext';
 
 const Main = () => {
@@ -12,20 +13,42 @@ const Main = () => {
     fontSize: 'large',
   };
 
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { user, isLoggedIn, logout, deleteUser } = useContext(AuthContext);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleLogout = () => {
     logout();
   };
 
+  const handleDeleteUser = () => {
+    setShowConfirmation(true);
+  };
+
+  const confirmDeleteUser = () => {
+    deleteUser()
+      .then(() => {
+        logout();
+      })
+      .catch((error) => {
+        console.log("Error deleting user:", error);
+      })
+      .finally(() => {
+        setShowConfirmation(false);
+      });
+  };
+
+  const cancelDeleteUser = () => {
+    setShowConfirmation(false);
+  };
+
   return (
     <>
       <div className="position-relative vh-100">
-        <video className="w-100 position-absolute top-0 start-0" autoPlay loop muted>
-          <source src={beach} type="video/mp4" />
+        <video className="position-fixed top-0 left-0 w-100 h-100" autoPlay loop muted>
+          <source src={dsa} type="video/mp4" />
         </video>
 
-        <Container className="position-relative" style={{ zIndex: 10 }}>
+        <Container className="position-relative min-vh-100" style={{ zIndex: 10 }}>
           <Row className="justify-content-center align-items-center">
             <Col xs="auto" className="text-center">
               <header className='my-4'>
@@ -34,6 +57,7 @@ const Main = () => {
                   <>
                     <NavLink className='mx-4' to='/users'>Users</NavLink>
                     <Button className='mx-4' onClick={handleLogout}>Logout</Button>
+                    <Button className='mx-4' onClick={handleDeleteUser}>Delete Account</Button>
                   </>
                 ) : (
                   <>
@@ -45,20 +69,121 @@ const Main = () => {
                     </NavLink>
                   </>
                 )}
-                <h1 className="mt-4 text-white">MatchYou</h1>
-                <h2 className='text-white mt-4'>BLA BLA BLA BLA BLA BLA</h2>
-                <div className='d-flex flex-column gap-3 mt-4'>
-                  {/* <button className="btn btn-primary mt-4" onClick=''>CONTINUE WITH GOOGLE</button> */}
-                  {/* <button className="btn btn-primary mt-4" onClick=''>CONTINUE WITH E-MAIL</button>
-                  <button className="btn btn-primary mt-4" onClick=''>CONTINUE WITH P-NUMBER</button> */}
-                </div>
+                {isLoggedIn && user ? (
+                  <div className="d-flex align-items-start mt-4">
+                    <PersonCircle
+                      size={48}
+                      className="me-2"
+                      style={{
+                        color: 'white',
+                        textShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)',
+                        boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.4)',
+                      }}
+                    />
+                    <div>
+                      <h2 className="text-white fs-4">{user.name || user.email}</h2>
+                    </div>
+                  </div>
+                ) : (
+                  <h2 className='text-white mt-4'>
+                    Please register if you do not have an account or login if you have one
+                  </h2>
+                )}
               </header>
-            </Col>
-          </Row>
-        </Container>
+              <Card className="my-4">
+  <Card.Body>
+    <div className="d-flex align-items-center justify-content-center">
+      <div className="cube">
+        <div className="face front">
+          <h3 className="text-blue">Outstaff Developers</h3>
+        </div>
+        <div className="face back">
+          <p className="text-blue">
+            We provide highly skilled and dedicated outstaff developers for your projects.
+            Our developers are experienced in various technologies and can seamlessly integrate into your team.
+            Whether you need web development, mobile app development, or any other software development expertise, we've got you covered.
+            With our flexible engagement models, you can scale your team up or down based on your project requirements.
+            Take your projects to the next level with our exceptional outstaff developers.
+          </p>
+        </div>
       </div>
-    </>
-  );
+    </div>
+  </Card.Body>
+</Card>
+
+<Card className="my-4">
+  <Card.Body>
+    <div className="d-flex align-items-center justify-content-center">
+      <div className="cube">
+        <div className="face front">
+          <h3 className="text-blue">Quality Assurance</h3>
+        </div>
+        <div className="face back">
+          <p className="text-blue">
+            Our QA experts ensure that your software meets the highest quality standards.
+            With their meticulous testing and quality assurance processes, we identify and resolve any issues to deliver a flawless product.
+            From functional testing to performance testing and everything in between, our QA team guarantees a seamless user experience.
+            Trust us to provide comprehensive quality assurance services for your projects.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Card.Body>
+</Card>
+
+<Card className="my-4">
+  <Card.Body>
+    <div className="d-flex align-items-center justify-content-center">
+      <div className="cube">
+        <div className="face front">
+          <h3 className="text-blue">Project Management</h3>
+        </div>
+        <div className="face back">
+          <p className="text-blue">
+            Our project managers ensure smooth execution and timely delivery of your projects.
+            With their expertise in agile methodologies and efficient coordination, they keep your development process on track.
+            From requirement gathering to task management and communication, our project managers streamline the project lifecycle.
+            Trust us to provide effective project management services for successful project outcomes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Card.Body>
+</Card>
+<footer className="footer fixed-bottom">
+  <Container fluid>
+    <Row className="justify-content-center align-items-center">
+      <Col xs="auto" className="text-center">
+        <p className="text-white">© 2023 Mila Alenina. All rights reserved.</p>
+        <p className="text-white">Terms of Service | Privacy Policy</p>
+      </Col>
+    </Row>
+  </Container>
+</footer>
+
+</Col>
+</Row>
+</Container>
+</div>
+
+<Modal show={showConfirmation} onHide={cancelDeleteUser} centered>
+<Modal.Header closeButton>
+  <Modal.Title>Confirmation</Modal.Title>
+</Modal.Header>
+<Modal.Body>
+  Are you sure you want to delete your account?
+</Modal.Body>
+<Modal.Footer>
+  <Button variant="secondary" onClick={cancelDeleteUser}>
+    Cancel
+  </Button>
+  <Button variant="danger" onClick={confirmDeleteUser}>
+    Delete Account
+  </Button>
+</Modal.Footer>
+</Modal>
+</>
+);
 };
 
 export default Main;

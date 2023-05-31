@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import User from '../User/User';
 import InputsFilters from '../InputsFilters/InputsFilters';
 import CountryFilter from '../CountryFilter/CountryFilter';
@@ -102,59 +101,60 @@ const Users = () => {
 
   return (
     <>
-      <Link to="/">Go to HomePage</Link>
-<div className="container">
-  <InputsFilters
-    searchInput={searchInput}
-    trackInputSearchValue={trackInputSearchValue}
-    genderFilterInput={genderFilterInput}
-    trackInputGenderFilterValue={trackInputGenderFilterValue}
-  />
-  <CountryFilter
-    countryFilterInput={countryFilterInput}
-    trackInputCountryFilterValue={trackInputCountryFilterValue}
-    originalUsers={originalUsers}
-  />
-  <AgeFilter
-    ageFilterFrom={ageFilterFrom}
-    ageFilterTo={ageFilterTo}
-    trackInputAgeFilterFrom={trackInputAgeFilterFrom}
-    trackInputAgeFilterTo={trackInputAgeFilterTo}
-  />
-  <div className="row">
-    <div className="col-12">
-      <div className="row">
-        {/* Conditional rendering - only render users if users array is not empty */}
-        {loading ? (
-          <div className="text-center">
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </Spinner>
-          </div>
-        ) : error ? (
-          <h1>{error}</h1>
-        ) : users.length > 0 ? (
-          users.map((user) => (
-            <User
-              key={user.phone}
-              uKey={user.phone}
-              nameF={user.name.first}
-              nameL={user.name.last}
-              img={user.picture.large}
-              city={user.location.city}
-              country={user.location.country}
-              age={user.dob.age}
-              email={user.email}
+      <div className="container">
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '50px' }}>
+          <InputsFilters
+            searchInput={searchInput}
+            trackInputSearchValue={trackInputSearchValue}
+            genderFilterInput={genderFilterInput}
+            trackInputGenderFilterValue={trackInputGenderFilterValue}
+          />
+          <div>
+            <CountryFilter
+              countryFilterInput={countryFilterInput}
+              trackInputCountryFilterValue={trackInputCountryFilterValue}
+              originalUsers={originalUsers}
             />
-          ))
-        ) : (
-          <h1>No users found.</h1>
-        )}
+            <AgeFilter
+              ageFilterFrom={ageFilterFrom}
+              ageFilterTo={ageFilterTo}
+              trackInputAgeFilterFrom={trackInputAgeFilterFrom}
+              trackInputAgeFilterTo={trackInputAgeFilterTo}
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            {loading ? (
+              <div className="text-center">
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
+            ) : error ? (
+              <h1>{error}</h1>
+            ) : users.length > 0 ? (
+              users.map((user) => (
+                <User
+                  key={user.phone}
+                  userDetails={user}
+                  uKey={user.phone}
+                  nameF={user.name.first}
+                  nameL={user.name.last}
+                  img={user.picture.large}
+                  city={user.location.city}
+                  country={user.location.country}
+                  age={user.dob.age}
+                  email={user.email}
+                  user={user}
+                />
+              ))
+            ) : (
+              <h1>No developers found.</h1>
+            )}
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-
     </>
   );
 };

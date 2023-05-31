@@ -2,13 +2,11 @@ import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { Form, Button, Card, Alert } from 'react-bootstrap';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { app, auth } from "../config/firebaseConfig";
 
 
 function Register() {
   const navigate = useNavigate();
-  const { register, setUser } = useContext(AuthContext); // Import setUser function from AuthContext
+  const { register } = useContext(AuthContext); 
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -69,7 +67,6 @@ function Register() {
   };
   
   const isValidEmail = (email) => {
-    // Basic email validation regex
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
@@ -125,6 +122,8 @@ function Register() {
         </Card.Body>
       </Card>
     </div>
+    
+    
   );
 }
 
