@@ -1,8 +1,13 @@
-import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { auth } from "../config/firebaseConfig";
+import { createContext, useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
+import { auth } from '../config/firebaseConfig';
+import { useContext } from 'react';
 
 export const AuthContext = createContext();
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 export const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
@@ -12,7 +17,6 @@ export const AuthContextProvider = (props) => {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
 
       await updateProfile(user, { displayName: name });
 
@@ -27,7 +31,6 @@ export const AuthContextProvider = (props) => {
       setIsLoggedIn(false);
     }
   };
-
   const login = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);

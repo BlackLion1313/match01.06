@@ -1,10 +1,15 @@
 import React from 'react';
 
 const AgeFilter = ({ ageFilterFrom, ageFilterTo, trackInputAgeFilterFrom, trackInputAgeFilterTo }) => {
+  
   return (
     <div className="row mb-3">
       <div className="col-md-4">
-        <label htmlFor="ageFilterFrom">Age From:</label>
+        {/* Комментарий: Компонент фильтрации возраста.
+        Принимает значения ageFilterFrom и ageFilterTo для задания диапазона возраста.
+        Использует функции trackInputAgeFilterFrom и trackInputAgeFilterTo для обновления значений фильтра.
+        */}
+        <label htmlFor="ageFilterFrom">Age from:</label>
         <input
           type="number"
           id="ageFilterFrom"
@@ -14,7 +19,11 @@ const AgeFilter = ({ ageFilterFrom, ageFilterTo, trackInputAgeFilterFrom, trackI
         />
       </div>
       <div className="col-md-4">
-        <label htmlFor="ageFilterTo">Age To:</label>
+        {/*Компонент фильтрации возраста.
+        Принимает значения ageFilterFrom и ageFilterTo для задания диапазона возраста.
+        Использует функции trackInputAgeFilterFrom и trackInputAgeFilterTo для обновления значений фильтра.
+        */}
+        <label htmlFor="ageFilterTo">Age to</label>
         <input
           type="number"
           id="ageFilterTo"
@@ -28,4 +37,5 @@ const AgeFilter = ({ ageFilterFrom, ageFilterTo, trackInputAgeFilterFrom, trackI
 };
 
 export default AgeFilter;
+
 

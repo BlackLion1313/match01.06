@@ -10,6 +10,7 @@ import Register from './pages/Register';
 import Login from './pages/Login';
 import UserDetails from './pages/UserDetails';
 import DeleteUserPage from './pages/DeleteUserPage';
+import Chat from './pages/Chat';
 
 const App = () => {
   console.log(app);
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/users" element={<Userspage />} />
+          <Route path="/chat" element={<Chat />} />
           <Route path="/user/:uKey" element={<UserDetails />} />
           <Route path="/delete" element={<DeleteUserPage />} />
           <Route path="*" element={<NotfoundPage />} />

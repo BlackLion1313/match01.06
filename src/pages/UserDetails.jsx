@@ -23,7 +23,7 @@ const UserDetails = (props) => {
   };
 
   return (
-    <div className="user-details-container d-flex flex-grow-1" style={{ backgroundImage: 'url(https://img3.akspic.ru/crops/6/5/3/5/3/135356/135356-lazer-liniya-temnota-neon-tehnologii-3840x2160.jpg)', backgroundSize: 'cover', minHeight: '100vh' }}>
+   
       <div className="container d-flex flex-column align-items-center" style={{ marginTop: '100px', minHeight: '100%' }}>
         {userDetails ? (
           <div className="card mx-auto shadow" style={{ width: '500px', borderRadius: '10px', padding: '20px', opacity: 0.8, backgroundColor: 'white' }}>
@@ -60,7 +60,7 @@ const UserDetails = (props) => {
           ) : (
             <p>Developer not found.</p>
           )}
-        </div>
+    
         <footer className="footer fixed-bottom">
   <Container fluid>
     <Row className="justify-content-center align-items-center">

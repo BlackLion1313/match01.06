@@ -4,7 +4,7 @@ import { Container, Row, Col, Button, Modal, Card } from 'react-bootstrap';
 import { PersonCircle } from 'react-bootstrap-icons';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap';
-import dsa from '../../assets/dsa.mp4'
+import dev from '../../assets/dev.mp4'
 import { AuthContext } from '../../context/AuthContext';
 
 const Main = () => {
@@ -44,8 +44,8 @@ const Main = () => {
   return (
     <>
       <div className="position-relative vh-100">
-        <video className="position-fixed top-0 left-0 w-100 h-100" autoPlay loop muted>
-          <source src={dsa} type="video/mp4" />
+        <video className="position-fixed background-100%" autoPlay loop muted>
+          <source src={dev} type="video/mp4" />
         </video>
 
         <Container className="position-relative min-vh-100" style={{ zIndex: 10 }}>
@@ -55,9 +55,10 @@ const Main = () => {
                 <NavLink style={({ isActive }) => isActive ? linkStyle : null} className='mx-4' to='/'>Home</NavLink>
                 {isLoggedIn ? (
                   <>
-                    <NavLink className='mx-4' to='/users'>Users</NavLink>
-                    <Button className='mx-4' onClick={handleLogout}>Logout</Button>
-                    <Button className='mx-4' onClick={handleDeleteUser}>Delete Account</Button>
+                    <NavLink className='mx-4' to='/users'>Developers</NavLink>
+                    <NavLink className='mx-4' to='/chat'>Chat</NavLink>
+                    <Button className='mx-4' variant="primary" onClick={handleLogout}>Logout</Button>
+                    <Button className='mx-4' variant="danger" onClick={handleDeleteUser}>Delete Account</Button>
                   </>
                 ) : (
                   <>
@@ -90,100 +91,75 @@ const Main = () => {
                   </h2>
                 )}
               </header>
-              <Card className="my-4">
-  <Card.Body>
-    <div className="d-flex align-items-center justify-content-center">
-      <div className="cube">
-        <div className="face front">
-          <h3 className="text-blue">Outstaff Developers</h3>
-        </div>
-        <div className="face back">
-          <p className="text-blue">
-            We provide highly skilled and dedicated outstaff developers for your projects.
-            Our developers are experienced in various technologies and can seamlessly integrate into your team.
-            Whether you need web development, mobile app development, or any other software development expertise, we've got you covered.
-            With our flexible engagement models, you can scale your team up or down based on your project requirements.
-            Take your projects to the next level with our exceptional outstaff developers.
-          </p>
-        </div>
+              <Card className="my-4" style={{ opacity: 0.9 }}>
+                <Card.Body>
+                  <h3>Outstaff Developers</h3>
+                  <p>
+                    We provide highly skilled and dedicated outstaff developers for your projects.
+                    Our developers are experienced in various technologies and can seamlessly integrate into your team.
+                    Whether you need web development, mobile app development, or any other software development expertise, we've got you covered.
+                    With our flexible engagement models, you can scale your team up or down based on your project requirements.
+                    Take your projects to the next level with our exceptional outstaff developers.
+                  </p>
+                </Card.Body>
+              </Card>
+
+              <Card className="my-4" style={{ opacity: 0.9 }}>
+                <Card.Body>
+                  <h3>Quality Assurance</h3>
+                  <p>
+                    Our QA experts ensure that your software meets the highest quality standards.
+                    With their meticulous testing and quality assurance processes, we identify and resolve any issues to deliver a flawless product.
+                    From functional testing to performance testing and everything in between, our QA team guarantees a seamless user experience.
+                    Trust us to provide comprehensive quality assurance services for your projects.
+                  </p>
+                </Card.Body>
+              </Card>
+
+              <Card className="my-4" style={{ opacity: 0.9 }}>
+                <Card.Body>
+                  <h3>Project Management</h3>
+                  <p>
+                    Our project managers ensure smooth execution and timely delivery of your projects.
+                    With their expertise in agile methodologies and efficient coordination, they keep your development process on track.
+                    From requirement gathering to task management and communication, our project managers streamline the project lifecycle.
+                    Trust us to provide effective project management services for successful project outcomes.
+                  </p>
+                </Card.Body>
+              </Card>
+              <footer className="footer fixed-bottom">
+                <Container fluid>
+                  <Row className="justify-content-center align-items-center">
+                    <Col xs="auto" className="text-center">
+                      <p className="text-white">© 2023 Mila Alenina. All rights reserved.</p>
+                      <p className="text-white">Terms of Service | Privacy Policy</p>
+                    </Col>
+                  </Row>
+                </Container>
+              </footer>
+            </Col>
+          </Row>
+        </Container>
       </div>
-    </div>
-  </Card.Body>
-</Card>
 
-<Card className="my-4">
-  <Card.Body>
-    <div className="d-flex align-items-center justify-content-center">
-      <div className="cube">
-        <div className="face front">
-          <h3 className="text-blue">Quality Assurance</h3>
-        </div>
-        <div className="face back">
-          <p className="text-blue">
-            Our QA experts ensure that your software meets the highest quality standards.
-            With their meticulous testing and quality assurance processes, we identify and resolve any issues to deliver a flawless product.
-            From functional testing to performance testing and everything in between, our QA team guarantees a seamless user experience.
-            Trust us to provide comprehensive quality assurance services for your projects.
-          </p>
-        </div>
-      </div>
-    </div>
-  </Card.Body>
-</Card>
-
-<Card className="my-4">
-  <Card.Body>
-    <div className="d-flex align-items-center justify-content-center">
-      <div className="cube">
-        <div className="face front">
-          <h3 className="text-blue">Project Management</h3>
-        </div>
-        <div className="face back">
-          <p className="text-blue">
-            Our project managers ensure smooth execution and timely delivery of your projects.
-            With their expertise in agile methodologies and efficient coordination, they keep your development process on track.
-            From requirement gathering to task management and communication, our project managers streamline the project lifecycle.
-            Trust us to provide effective project management services for successful project outcomes.
-          </p>
-        </div>
-      </div>
-    </div>
-  </Card.Body>
-</Card>
-<footer className="footer fixed-bottom">
-  <Container fluid>
-    <Row className="justify-content-center align-items-center">
-      <Col xs="auto" className="text-center">
-        <p className="text-white">© 2023 Mila Alenina. All rights reserved.</p>
-        <p className="text-white">Terms of Service | Privacy Policy</p>
-      </Col>
-    </Row>
-  </Container>
-</footer>
-
-</Col>
-</Row>
-</Container>
-</div>
-
-<Modal show={showConfirmation} onHide={cancelDeleteUser} centered>
-<Modal.Header closeButton>
-  <Modal.Title>Confirmation</Modal.Title>
-</Modal.Header>
-<Modal.Body>
-  Are you sure you want to delete your account?
-</Modal.Body>
-<Modal.Footer>
-  <Button variant="secondary" onClick={cancelDeleteUser}>
-    Cancel
-  </Button>
-  <Button variant="danger" onClick={confirmDeleteUser}>
-    Delete Account
-  </Button>
-</Modal.Footer>
-</Modal>
-</>
-);
+      <Modal show={showConfirmation} onHide={cancelDeleteUser} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Are you sure you want to delete your account?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={cancelDeleteUser}>
+            Cancel
+          </Button>
+          <Button variant="danger" onClick={confirmDeleteUser}>
+            Delete Account
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+  );
 };
 
 export default Main;
